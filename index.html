@@ -28,6 +28,7 @@ body {
     padding: 22px 18px 26px;
     text-align: center;
     box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    animation: fadeUp 1.6s ease;
 }
 
 .profile {
@@ -36,40 +37,46 @@ body {
     border-radius: 50%;
     object-fit: cover;
     border: 5px solid white;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
 }
 
 h1 { font-size: 26px; margin: 6px 0; }
-h2 { font-size: 20px; margin-bottom: 10px; }
+h2 { font-size: 20px; margin-bottom: 12px; }
 
 p {
     font-size: 15px;
     line-height: 1.7;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
 }
 
-/* ===== GALERI ===== */
-.gallery-wrapper {
-    overflow: hidden;
-    border-radius: 16px;
-    margin: 14px 0;
-}
-
+/* GALERI */
 .gallery {
     display: flex;
-    transition: transform 0.6s ease;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 12px;
+    margin: 15px 0;
+    padding-bottom: 5px;
+}
+
+.gallery::-webkit-scrollbar {
+    display: none;
 }
 
 .gallery img {
-    width: 100%;
-    flex-shrink: 0;
-    height: 180px;
+    width: 260px;
+    height: 160px;
     object-fit: cover;
+    border-radius: 16px;
+    scroll-snap-align: center;
+    flex-shrink: 0;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
 }
 
 .tap {
     font-size: 14px;
     opacity: 0.85;
+    margin-top: 8px;
 }
 
 /* Confetti */
@@ -79,6 +86,11 @@ p {
     width: 10px;
     height: 10px;
     animation: fall linear infinite;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fall {
@@ -92,19 +104,49 @@ p {
 <audio id="music" src="music.mp3" autoplay muted loop></audio>
 
 <div class="card" onclick="unmuteMusic()">
-    <img src="images/citra.jpg" class="profile">
+    <img src="citra.jpg" class="profile" alt="Citra Ananda Ratri">
 
     <h1>Happy 24th Birthday 🎂</h1>
     <h2>Citra Ananda Ratri 💖</h2>
 
     <p>
-        Semoga di usia ke-24 ini,
-        kebahagiaan selalu menemukanmu.
+        Di usia ke-24 ini, semoga setiap langkahmu
+        selalu dipenuhi kebahagiaan.
         Terima kasih telah menjadi sosok
-        yang begitu berarti dan penuh cinta 🤍
+        yang begitu hangat dan berarti.
+        Semoga cinta, harapan, dan senyum
+        selalu menemukan jalan pulang 🤍
     </p>
 
-    <!-- GALERI AUTO SLIDE + SWIPE -->
-    <div class="gallery-wrapper" id="galleryWrapper">
-        <div class="gallery" id="gallery">
-            <img src="images/foto1
+    <!-- GALERI SWIPE -->
+    <div class="gallery">
+        <img src="foto1.jpg">
+        <img src="foto2.jpg">
+        <img src="foto3.jpg">
+        <img src="foto4.jpg">
+    </div>
+
+    <div class="tap">👈 Geser foto • 👆 Sentuh layar untuk lagu</div>
+</div>
+
+<script>
+const music = document.getElementById("music");
+
+function unmuteMusic() {
+    music.muted = false;
+    music.play();
+}
+
+// confetti
+for (let i = 0; i < 35; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.background = `hsl(${Math.random()*360},100%,70%)`;
+    c.style.animationDuration = (Math.random()*3 + 3) + "s";
+    document.body.appendChild(c);
+}
+</script>
+
+</body>
+</html>
